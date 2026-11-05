@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahitya Ratan | 3D Developer Portfolio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #08090b;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+#progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: #e5a33d;
+    z-index: 1000;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: rgba(8,9,11,.65);
+    backdrop-filter: blur(12px);
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #e5a33d;
+    letter-spacing: 2px;
+}
+
+nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+nav a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+    transition: .3s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #e5a33d;
+}
+
+section {
+    min-height: 100vh;
+    padding: 120px 9%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+#home {
+    background:
+        radial-gradient(ellipse at 75% 50%, #49331c 0%, transparent 42%),
+        linear-gradient(120deg,#08090b,#151311);
+}
+
+#about {
+    background: linear-gradient(120deg,#101113,#17130e);
+}
+
+#skills {
+    background: linear-gradient(120deg,#090b0e,#19140d);
+}
+
+#projects {
+    background: linear-gradient(120deg,#111214,#08090b);
+}
+
+.content {
+    position: relative;
+    z-index: 5;
+    max-width: 550px;
+}
+
+.eyebrow {
+    color: #e5a33d;
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(40px,6vw,75px);
+    line-height: 1.12;
+    margin-bottom: 22px;
+}
+
+h1 span,
+h2 span {
+    color: #e5a33d;
+}
+
+h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(32px,4vw,52px);
+    margin-bottom: 25px;
+}
+
+p {
+    color: #aaa;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 13px 27px;
+    border: 1px solid #e5a33d;
+    color: #e5a33d;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    transition: .3s;
+}
+
+.btn:hover {
+    background: #e5a33d;
+    color: #08090b;
+    transform: translateY(-4px);
+}
+
+#three {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#three canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: auto;
+    touch-action: none;
+    cursor: grab;
+}
+
+#three canvas:active {
+    cursor: grabbing;
+}
+
+#glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    right: 17%;
+    top: 35%;
+    border-radius: 50%;
+    background: #ffb84d;
+    filter: blur(120px);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 1s;
+}
+
+.section-label {
+    color: #e5a33d;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+}
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+    max-width: 500px;
+}
+
+.skill {
+    padding: 22px;
+    border: 1px solid #34302a;
+    background: rgba(255,255,255,.035);
+    transition: .3s;
+}
+
+.skill:hover {
+    border-color: #e5a33d;
+    transform: translateY(-7px);
+    background: rgba(229,163,61,.08);
+}
+
+.skill h3 {
+    color: #e5a33d;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.skill p {
+    font-size: 12px;
+}
+
+.project-card {
+    border: 1px solid #34302a;
+    background: rgba(255,255,255,.035);
+    padding: 25px;
+    margin-top: 25px;
+    max-width: 480px;
+}
+
+.project-card h3 {
+    color: #e5a33d;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 10px;
+}
+
+.hint {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #aaa;
+    font-size: 10px;
+    letter-spacing: 2px;
+    z-index: 20;
+    pointer-events: none;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #08090b;
+    color: #777;
+    font-size: 12px;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity .9s ease, transform .9s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media(max-width: 700px) {
+    nav {
+        padding: 18px 5%;
+    }
+
+    nav ul {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 10px;
+    }
+
+    .logo {
+        font-size: 14px;
+    }
+
+    section {
+        padding: 110px 7%;
+        align-items: flex-end;
+        padding-bottom: 100px;
+    }
+
+    #home {
+        align-items: center;
+    }
+
+    .content {
+        max-width: 100%;
+    }
+
+    #three {
+        opacity: .85;
+    }
+
+    .skill-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hint {
+        bottom: 10px;
+        width: 100%;
+        font-size: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="progress"></div>
+
+<nav>
+    <div class="logo">SAHITYA.</div>
+    <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+    </ul>
+</nav>
+
+<div id="three"></div>
+<div id="glow"></div>
+
+<section id="home">
+    <div class="content reveal">
+        <div class="eyebrow">Welcome to my portfolio</div>
+        <h1>SAHITYA<br><span>RATAN</span></h1>
+        <p>
+            Aspiring Developer | Programmer | Creative Thinker
+            <br><br>
+            I love coding, building digital experiences and exploring
+            the world of technology.
+        </p>
+        <a href="#about" class="btn">EXPLORE MY WORLD</a>
+    </div>
+</section>
+
+<section id="about">
+    <div class="content reveal">
+        <div class="section-label">01 / ABOUT ME</div>
+        <h2>CREATING<br><span>THE FUTURE</span></h2>
+        <p>
+            Hello! I am <strong>Sahitya Ratan</strong>, a passionate
+            technology enthusiast and aspiring software developer.
+            I enjoy solving problems, learning programming languages
+            and creating interactive digital experiences.
+            <br><br>
+            My goal is to combine creativity and coding to build
+            something meaningful.
+        </p>
+        <a href="#skills" class="btn">MY SKILLS</a>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="content reveal">
+        <div class="section-label">02 / MY SKILLS</div>
+        <h2>TECH <span>STACK</span></h2>
+        <p>Technologies and programming languages I work with and continue to learn.</p>
+
+        <div class="skill-grid">
+            <div class="skill">
+                <h3>PYTHON</h3>
+                <p>Programming, logic and problem solving.</p>
+            </div>
+
+            <div class="skill">
+                <h3>JAVA</h3>
+                <p>Object-oriented programming and development.</p>
+            </div>
+
+            <div class="skill">
+                <h3>HTML</h3>
+                <p>Building structured web pages.</p>
+            </div>
+
+            <div class="skill">
+                <h3>CSS</h3>
+                <p>Responsive layouts and modern design.</p>
+            </div>
+
+            <div class="skill">
+                <h3>JAVASCRIPT</h3>
+                <p>Interactive web experiences.</p>
+            </div>
+
+            <div class="skill">
+                <h3>THREE.JS</h3>
+                <p>3D graphics and interactive models.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="content reveal">
+        <div class="section-label">03 / MY PROJECTS</div>
+        <h2>WHAT I <span>BUILD</span></h2>
+
+        <div class="project-card">
+            <h3>3D MOTORCYCLE PORTFOLIO</h3>
+            <p>
+                An interactive 3D portfolio featuring a café-racer
+                motorcycle, mouse rotation, lighting and scroll-based
+                animations using Three.js.
+            </p>
+        </div>
+
+        <div class="project-card">
+            <h3>PYTHON & JAVA PROJECTS</h3>
+            <p>
+                Programming projects focused on logical thinking,
+                problem solving and learning software development.
+            </p>
+        </div>
+
+        <a href="#home" class="btn">BACK TO TOP</a>
+    </div>
+</section>
+
+<footer>
+    © 2026 SAHITYA RATAN | BUILT WITH PASSION & CODE
+</footer>
+
+<div class="hint">DRAG TO ROTATE THE BIKE · SCROLL TO EXPLORE</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+/* SCENE */
+
+const container = document.getElementById('three');
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+    35,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    100
+);
+
+camera.position.set(0, 2, 9);
+
+const renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+container.appendChild(renderer.domElement);
+
+/* LIGHTING */
+
+scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+
+const keyLight = new THREE.DirectionalLight(0xffffff, 3);
+keyLight.position.set(5, 7, 5);
+scene.add(keyLight);
+
+const warmLight = new THREE.PointLight(0xffa53b, 35, 15);
+warmLight.position.set(-4, 2, 3);
+scene.add(warmLight);
+
+const rimLight = new THREE.PointLight(0xffffff, 25, 15);
+rimLight.position.set(3, 3, -4);
+scene.add(rimLight);
+
+/* BIKE GROUP */
+
+const bikeGroup = new THREE.Group();
+scene.add(bikeGroup);
+
+let bike = null;
+let modelLoaded = false;
+
+/* HEADLIGHT */
+
+const headlight = new THREE.PointLight(0xffd18a, 0, 12);
+headlight.position.set(0, 0.8, 1.5);
+bikeGroup.add(headlight);
+
+/* LOAD MODEL */
+
+const loader = new GLTFLoader();
+
+loader.load(
+    './assets/cafe-racer.glb',
+
+    (gltf) => {
+        bike = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(bike);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+
+        const maxDimension = Math.max(size.x, size.y, size.z);
+        const scale = 4.2 / maxDimension;
+
+        bike.scale.setScalar(scale);
+        bike.position.set(
+            -center.x * scale,
+            -center.y * scale,
+            -center.z * scale
+        );
+
+        bikeGroup.add(bike);
+
+        modelLoaded = true;
+
+        console.log('Motorcycle model loaded successfully');
+    },
+
+    undefined,
+
+    (error) => {
+        console.error('Could not load bike model:', error);
+    }
+);
+
+/* MOUSE ROTATION */
+
+let dragging = false;
+let previousX = 0;
+let previousY = 0;
+
+let dragRotationY = 0;
+let dragRotationX = 0;
+
+const canvas = renderer.domElement;
+
+canvas.addEventListener('pointerdown', (event) => {
+    dragging = true;
+
+    previousX = event.clientX;
+    previousY = event.clientY;
+
+    canvas.setPointerCapture(event.pointerId);
+    canvas.style.cursor = 'grabbing';
+});
+
+canvas.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+
+    const deltaX = event.clientX - previousX;
+    const deltaY = event.clientY - previousY;
+
+    dragRotationY += deltaX * 0.008;
+    dragRotationX += deltaY * 0.004;
+
+    dragRotationX = THREE.MathUtils.clamp(
+        dragRotationX,
+        -0.45,
+        0.45
+    );
+
+    previousX = event.clientX;
+    previousY = event.clientY;
+});
+
+function stopDragging() {
+    dragging = false;
+    canvas.style.cursor = 'grab';
+}
+
+canvas.addEventListener('pointerup', stopDragging);
+canvas.addEventListener('pointercancel', stopDragging);
+canvas.addEventListener('lostpointercapture', stopDragging);
+
+/* SCROLL ANIMATION */
+
+const sections = [...document.querySelectorAll('section')];
+
+let scrollProgress = 0;
+let activeSection = 0;
+
+function updateScroll() {
+    const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+    scrollProgress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+
+    document.getElementById('progress').style.width =
+        `${scrollProgress * 100}%`;
+
+    let closest = 0;
+
+    sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+
+        if (
+            rect.top <= window.innerHeight * 0.5 &&
+            rect.bottom >= window.innerHeight * 0.5
+        ) {
+            closest = index;
+        }
+    });
+
+    activeSection = closest;
+
+    document.querySelectorAll('nav a').forEach(link => {
+        link.classList.toggle(
+            'active',
+            link.getAttribute('href') === `#${sections[activeSection].id}`
+        );
+    });
+
+    document.getElementById('glow').style.opacity =
+        activeSection === 1 ? '0.35' : '0';
+}
+
+window.addEventListener('scroll', updateScroll);
+updateScroll();
+
+/* REVEAL ANIMATIONS */
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.15
+});
+
+document.querySelectorAll('.reveal').forEach(element => {
+    observer.observe(element);
+});
+
+/* CAMERA AND BIKE ANIMATION */
+
+const clock = new THREE.Clock();
+
+function animate() {
+    requestAnimationFrame(animate);
+
+    const time = clock.getElapsedTime();
+
+    const targetPositions = [
+        { x: 0, y: 0.2, z: 9, cameraY: 2.1, cameraZ: 9, light: 0 },
+        { x: 1.5, y: 0, z: 0, cameraY: 1.8, cameraZ: 8, light: 5 },
+        { x: -1.5, y: 0, z: -0.3, cameraY: 2.2, cameraZ: 8, light: 5 },
+        { x: 0, y: 0.5, z: -1, cameraY: 7, cameraZ: 4.5, light: 8 }
+    ];
+
+    const target = targetPositions[activeSection];
+
+    if (modelLoaded) {
+        // Scroll controls the base angle.
+        const baseRotationY = [0, 0.5, 1.3, 0][activeSection];
+
+        // Mouse drag adds extra rotation on top of the scroll angle.
+        bikeGroup.rotation.y += (
+            baseRotationY + dragRotationY - bikeGroup.rotation.y
+        ) * 0.07;
+
+        bikeGroup.rotation.x += (
+            dragRotationX - bikeGroup.rotation.x
+        ) * 0.07;
+
+        // Gentle idle movement.
+        if (!dragging) {
+            bikeGroup.position.y =
+                Math.sin(time * 1.2) * 0.035;
+        }
+
+        headlight.intensity += (
+            target.light - headlight.intensity
+        ) * 0.06;
+    }
+
+    camera.position.x += (target.x - camera.position.x) * 0.035;
+    camera.position.y += (target.cameraY - camera.position.y) * 0.035;
+    camera.position.z += (target.cameraZ - camera.position.z) * 0.035;
+
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+}
+
+animate();
+
+/* RESPONSIVE */
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+</script>
+
+</body>
+</html>
